@@ -25,7 +25,7 @@ class Snake:
         self.draw()
 
     def draw(self):
-        self.parent_screen.fill((71, 93, 110))
+        self.parent_screen.fill((36, 28, 31))
         self.parent_screen.blit(self.block,(self.x, self.y))
         pygame.display.flip()
 
