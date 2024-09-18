@@ -9,8 +9,9 @@ class Snake:
         self.block = pygame.image.load("C:\\zaidd\\Snake_Game\\block.jpg").convert()
         self.x = 100 
         self.y = 100
-        self.direction = 'down'
+        self.direction = 'down' #the initial of the block
 
+        #insted of the codinates and the draw() using direction
     def move_up(self):
        self.direction = 'up'
 
@@ -73,8 +74,8 @@ class Game:
                 elif event.type == pygame.QUIT:
                     running = False
 
-            self.snake.walk()
-            time.sleep(0.2)
+            self.snake.walk()   
+            time.sleep(0.2)      #timer of the block moving
 
 if __name__ == "__main__":
     game = Game()
