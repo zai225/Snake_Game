@@ -4,8 +4,8 @@ import time
 
 
 class Snake:
-    def __init__(self, parent_screen):
-        self.parent_screen = parent_screen
+    def __init__(self, surface):
+        self.parent_screen = surface
         self.block = pygame.image.load("C:\\zaidd\\Snake_Game\\block.jpg").convert()
         self.x = 100 
         self.y = 100
