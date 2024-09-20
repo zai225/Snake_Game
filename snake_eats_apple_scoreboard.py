@@ -4,6 +4,7 @@ import time
 import random
 
 SIZE = 40
+BACKGROUND_COLOR = (36, 28, 31)
 
 class Apple:
     def __init__(self,parent_screen,):
@@ -17,8 +18,8 @@ class Apple:
         pygame.display.flip()
 
     def move(self):
-        self.x = random.randint(0,25)*SIZE
-        self.y = random.randint(0,20)*SIZE
+        self.x = random.randint(0,19)*SIZE
+        self.y = random.randint(0,14)*SIZE
 
 class Snake:
     def __init__(self, parent_screen, lenght):
@@ -47,7 +48,7 @@ class Snake:
         self.direction = 'right'
 
     def draw(self):
-        self.parent_screen.fill((36, 28, 31))
+        self.parent_screen.fill((BACKGROUND_COLOR))
         for i in range(self.lenght):
             self.parent_screen.blit(self.block,(self.x[i], self.y[i]))
         pygame.display.flip()
@@ -68,12 +69,11 @@ class Snake:
 
         self.draw()
 
-    
-
 class Game:
     def __init__(self):
         pygame.init()
-        self.surface = pygame.display.set_mode((1000, 800))
+        self.surface = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption('Snake Game')
         self.snake = Snake(self.surface, 1)
         self.snake.draw()
         self.apple = Apple(self.surface)
@@ -88,10 +88,17 @@ class Game:
     def play(self):
         self.snake.walk()
         self.apple.draw()
+        self.display_score()
+        pygame.display.flip()
 
         if self.is_collision(self.snake.x[0], self.snake.y[0], self.apple.x, self.apple.y):
             self.snake.increase_length()
             self.apple.move()
+
+    def display_score(self):
+        font = pygame.font.SysFont('Arial', 30)
+        score = font.render(f" Score: {self.snake.lenght}", True,(255,255,255))
+        self.surface.blit(score, (680,20))
 
     def run (self):
         running = True
