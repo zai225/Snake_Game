@@ -82,6 +82,9 @@ class Game:
         self.apple = Apple(self.surface)
         self.apple.draw()
         self.clock = pygame.time.Clock()
+        self.time_interval = 2
+
+
 
     def is_collision(self, x1, y1, x2, y2):
         if x1 >= x2 and x1 < x2 + SIZE:
@@ -101,6 +104,13 @@ class Game:
             # mixer.music.play()
             self.snake.increase_length()
             self.apple.move()
+            if 10 < self.snake.lenght >= 5:
+                self.time_interval = 1
+
+            if 15 <= self.snake.lenght >= 10:
+                self.time_interval = .5
+
+    
 
          #snake colliding itself
         for i in range(3,self.snake.lenght):
@@ -164,7 +174,7 @@ class Game:
                 pause = True
                 self.reset()
             
-            self.clock.tick(2)      
+            self.clock.tick(self.time_interval)      
 
 if __name__ == "__main__":
     game = Game()
