@@ -7,6 +7,8 @@ import random
 SIZE = 40
 BACKGROUND_COLOR = (36, 28, 31)
 
+pygame.mixer.init()
+
 class Apple:
     def __init__(self,parent_screen,):
         self.image = pygame.image.load("C:\\zaidd\\Snake_Game\\apple.jpg").convert()
@@ -77,6 +79,11 @@ class Game:
         # mixer.init()
         self.surface = pygame.display.set_mode((800, 600))
         pygame.display.set_caption('Snake Game')
+
+        #Bg music
+        pygame.mixer.music.load("C:\\zaidd\\Snake_Game\\bg_music_1.mp3")
+        pygame.mixer.music.play(-1)
+
         self.snake = Snake(self.surface, 1)
         self.snake.draw()
         self.apple = Apple(self.surface)
@@ -84,6 +91,9 @@ class Game:
         self.clock = pygame.time.Clock()
         self.time_interval = 2
 
+        #Sound effect
+        self.eat_sound = pygame.mixer.Sound("C:\\zaidd\\Snake_Game\\1_snake_game_resources_ding.mp3")
+        self.game_over_sound = pygame.mixer.Sound("C:\\zaidd\\Snake_Game\\1_snake_game_resources_crash (1).mp3")
 
 
     def is_collision(self, x1, y1, x2, y2):
@@ -100,8 +110,7 @@ class Game:
 
         #snake colliding with apple
         if self.is_collision(self.snake.x[0], self.snake.y[0], self.apple.x, self.apple.y):
-            # sound = mixer.music.load("C:\\zaidd\\Snake_Game\\1_snake_game_resources_ding")
-            # mixer.music.play()
+            pygame.mixer.Sound.play(self.eat_sound)
             self.snake.increase_length()
             self.apple.move()
             if 10 < self.snake.lenght >= 5:
@@ -110,11 +119,10 @@ class Game:
             if 15 <= self.snake.lenght >= 10:
                 self.time_interval = .5
 
-    
-
          #snake colliding itself
         for i in range(3,self.snake.lenght):
             if self.is_collision(self.snake.x[0], self.snake.y[0], self.snake.x[i],self.snake.y[i]):
+                pygame.mixer.Sound.play(self.game_over_sound)
                 raise Exception("Collison Occured")
 
     #making a new surface window for the game_over page
